@@ -22,6 +22,28 @@ class Channel:
         self.viewCount = self.channel['items'][0]['statistics']['viewCount']
 
 
+    def __add__(self, other):
+        return f'{int(self.viewCount) + int(other.viewCount)}  {self.viewCount}  {other.viewCount}'
+
+    def __sub__(self, other):
+        return f'{int(self.viewCount) - int(other.viewCount)}  {self.viewCount}  {other.viewCount}'
+
+
+    def __gt__(self, other):
+        return f'{int(self.viewCount) > int(other.viewCount)}'
+
+    def __ge__(self, other):
+        return f'{int(self.viewCount) >= int(other.viewCount)}'
+
+    def __lt__(self, other):
+        return f'{int(self.viewCount) < int(other.viewCount)}'
+
+    def __le__(self, other):
+        return f'{int(self.viewCount) <= int(other.viewCount)}'
+
+    def __str__(self):
+        return f'https://www.youtube.com/channel/{self.channel_id}'
+
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
 
@@ -35,7 +57,7 @@ class Channel:
     def to_json(self, filename):
         data = {"chanell_id": self.channel_id, "title": self.title, "video_count": self.video_count, "url": self.url}
         with open(filename, "w") as f:
-            json.dump(data, f)
+            json.dump(data, f, ensure_ascii=False)
 
     @classmethod
     def get_service(cls) -> None:
