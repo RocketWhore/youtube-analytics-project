@@ -10,6 +10,7 @@ class Channel:
     """Класс для ютуб-канала"""
     api_key: str = os.getenv("API_KEY")
     youtube = build('youtube', 'v3', developerKey=api_key)
+
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.channel_id = channel_id
@@ -21,13 +22,11 @@ class Channel:
         self.video_count = self.channel['items'][0]['statistics']['videoCount']
         self.viewCount = self.channel['items'][0]['statistics']['viewCount']
 
-
     def __add__(self, other):
         return f'{int(self.viewCount) + int(other.viewCount)}  {self.viewCount}  {other.viewCount}'
 
     def __sub__(self, other):
         return f'{int(self.viewCount) - int(other.viewCount)}  {self.viewCount}  {other.viewCount}'
-
 
     def __gt__(self, other):
         return f'{int(self.viewCount) > int(other.viewCount)}'
@@ -53,7 +52,6 @@ class Channel:
         # print(channel['items'][0]['statistics']['videoCount'])
         # print(f'https://www.youtube.com/channel/{self.chanell_id}')
 
-
     def to_json(self, filename):
         data = {"chanell_id": self.channel_id, "title": self.title, "video_count": self.video_count, "url": self.url}
         with open(filename, "w") as f:
@@ -74,9 +72,6 @@ class Channel:
         return youtube
 
     # channel = youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
-        # title = channel['items'][0]['snippet']['title']
-        # video_count = channel['items'][1]['statistics']['title']
-        # url = f'https://www.youtube.com/channel/{channel_id}'
-
-
-
+    # title = channel['items'][0]['snippet']['title']
+    # video_count = channel['items'][1]['statistics']['title']
+    # url = f'https://www.youtube.com/channel/{channel_id}'
